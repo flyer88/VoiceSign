@@ -12,4 +12,11 @@
     <string name="login_title">登  录</string>
     <string name="sno">学  号</string>
     <string name="password">密  码</string>
+    <string name="voicesign">声波签到</string>
+    <string name="setting_sign_voice">接收签到声波</string>
+    <string name="setting_sign_qr">获取签到二维码</string>
+    <string name="setting_logout">退出登录</string>
+    <string name="setting_new_admin">成员管理</string>
+    <string name="setting_new_sign">发起新的签到</string>
+    <string name="sign_qr">二维码签到</string>
 </resources>

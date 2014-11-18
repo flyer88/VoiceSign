@@ -3,24 +3,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="5dp"
     >
     <Button
+        android:layout_marginTop="20dp"
         android:id="@+id/sign_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/pager_sign"
+        android:text="@string/voicesign"
+        android:background="@drawable/setting_btn_bg"
         />
-    <Button
-        android:id="@+id/sign_rec"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="开始识别"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#aaa"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            ></LinearLayout>
+        <Button
+            android:id="@+id/sign_qr"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sign_qr"
+            android:background="@drawable/setting_btn_bg"
         />
-    <Button
-        android:id="@+id/sign_rec_stop"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="停止识别"
-        />
+        </LinearLayout>
 </LinearLayout>

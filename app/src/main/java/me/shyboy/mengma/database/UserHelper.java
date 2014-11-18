@@ -20,8 +20,8 @@ public class UserHelper {
 
     public void update(User user)
     {
+        logout();
         SQLiteDatabase db = helper.getWritableDatabase();
-        db.delete(SignConfig.TABLEUSER,"1 = 1",null);
         ContentValues values = new ContentValues();
         values.put("sno",user.getSno());
         values.put("name",user.getName());
@@ -46,5 +46,10 @@ public class UserHelper {
             );
         }
         return null;
+    }
+    public void logout()
+    {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        db.delete(SignConfig.TABLEUSER,"1 = 1",null);
     }
 }
