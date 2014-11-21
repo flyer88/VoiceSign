@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGERI" />
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.NFC"/>
+    <uses-feature android:name="android.hardware.nfc" android:required="true"></uses-feature>
 
     <application
         android:allowBackup="true"
@@ -33,8 +35,18 @@
             android:label="@string/title_activity_sign_list" >
         </activity>
         <activity
-            android:name=".SignDetailActivity"
+            android:name="me.shyboy.mengma.SignDetailActivity"
             android:label="@string/title_activity_sign_detail" >
+        </activity>
+        <activity
+            android:name="me.shyboy.mengma.NfcActivity"
+            android:label="@string/title_activity_nfc" >
+            <intent-filter>
+                <action android:name="android.nfc.action.TECH_DISCOVERED"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.nfc.action.TECH_DISCOVERED"
+                android:resource="@xml/nfc"/>
         </activity>
     </application>
 
