@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.shyboy.mengma.Common.Sign;
@@ -40,6 +41,10 @@ public class SignDetailActivity extends Activity {
         if(null != list)
         {
             title.setText(list.get(0).getDescription());
+        }
+        else
+        {
+            list = new ArrayList<SignDetail>();
         }
         listView.setAdapter(new ListAdapter(SignDetailActivity.this,R.layout.item_details,list));
         bt_out.setOnClickListener(new View.OnClickListener() {

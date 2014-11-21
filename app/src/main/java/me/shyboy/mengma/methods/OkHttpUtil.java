@@ -173,6 +173,7 @@ public class OkHttpUtil {
     {
         Gson gson = new Gson();
         String json = gson.toJson(userSign);
+        //Log.e("hello",json+"____________");
         RequestBody body = RequestBody.create(MEDIA_TYPE,json);
         Request request = new Request.Builder()
                 .url(SignConfig.URLSIGNCHECK)
