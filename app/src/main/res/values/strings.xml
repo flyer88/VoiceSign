@@ -33,4 +33,6 @@
     <string name="login_btn_text">登  录</string>
     <string name="title_activity_sign_detail">SignDetail</string>
     <string name="link_register">用户注册</string>
+    <string name="title_activity_nfc">NfcActivity</string>
+
 </resources>

@@ -168,7 +168,7 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
             settingSignNfc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MainActivity.this,"NFC",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,"如果需要使用NFC签到,请将一卡通放到手机背后!",Toast.LENGTH_SHORT).show();
                 }
             });
         }
