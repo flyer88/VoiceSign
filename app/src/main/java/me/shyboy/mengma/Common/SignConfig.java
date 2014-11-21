@@ -10,12 +10,12 @@ import android.net.NetworkInfo;
 public final class SignConfig {
     public static final int DBVERSION = 5;
     public static final String TABLEUSER = "User";
-    public static final String URLLOGIN = "http://192.168.233.2/laravel/sign/public/login";
-    public static final String URLNEWSIGN = "http://192.168.233.2/laravel/sign/public/sign/new";
-    public static final String URLSIGNCHECK = "http://192.168.233.2/laravel/sign/public/sign/check";
-    public static final String URLISSIGNED = "http://192.168.233.2/laravel/sign/public/sign/signed";
-    public static final String URLLISTSIGN = "http://192.168.233.2/laravel/sign/public/sign/list";
-    public static final String URLSIGNDETAIL = "http://192.168.233.2/laravel/sign/public/sign/detail";
+    public static final String URLLOGIN = "http://www.flappyant.com/VoiceSignListener/public/login";
+    public static final String URLNEWSIGN = "http://www.flappyant.com/VoiceSignListener/public/sign/new";
+    public static final String URLSIGNCHECK = "http://www.flappyant.com/VoiceSignListener/public/check";
+    public static final String URLISSIGNED = "http://www.flappyant.com/VoiceSignListener/public/signed";
+    public static final String URLLISTSIGN = "http://www.flappyant.com/VoiceSignListener/public/sign/list";
+    public static final String URLSIGNDETAIL = "http://www.flappyant.com/VoiceSignListener/public/sign/detail";
     public static final String TABLESIGN = "Sign";
     public static final String TABLEDETAIL = "SignDetail";
     public static final int SNOLENGTH = 8;

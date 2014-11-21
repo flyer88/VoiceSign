@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +17,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import me.shyboy.mengma.Common.Sign;
@@ -92,6 +94,15 @@ public class LoginActivity extends Activity {
                 http.login();
             }
         });
+
+        ((TextView)findViewById(R.id.link_register)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("http://www.flappyant.com/VoiceSignListener/public/register");
+                Intent it = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(it);
+            }
+        });
     }
     Handler welHandler = new Handler()
     {
@@ -108,7 +119,5 @@ public class LoginActivity extends Activity {
     public void onStop()
     {
         super.onStop();
-        Log.i("login","login success,->main.");
-        this.finish();
     }
 }

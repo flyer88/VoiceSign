@@ -104,6 +104,7 @@ public class OkHttpUtil {
                     UserHelper helper = new UserHelper(context);
                     helper.update(obj.getData());
                     context.startActivity(intent);
+                    ((Activity)context).finish();
                 }
                 else
                 {
