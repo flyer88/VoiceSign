@@ -29,12 +29,12 @@ public class NfcActivity extends Activity {
 
         if (user.getPid()<4) {//验证
             String  sno =myNfcAdapter.processNfcAdapterIntent(getIntent());
-
+            //Toast.makeText(NfcActivity.this,sno+"签到成功!", Toast.LENGTH_SHORT).show();
             User user = new UserHelper(NfcActivity.this).getUser();
             UserSign userSign = new UserSign(sno,user.getSno(),user.getAccess_token());
             new OkHttpUtil(NfcActivity.this).Sign(userSign);
-           // Toast.makeText(NfcActivity.this,sno+"签到成功!", Toast.LENGTH_SHORT).show();
-            //finish();
+
+            finish();
         } else {
             //Toast.makeText(NfcActivity.this,myNfcAdapter.processNfcAdapterIntent(getIntent()), Toast.LENGTH_SHORT).show();
             Toast.makeText(NfcActivity.this, "小样,你想用你自己的手机签到么?哈哈哈哈哈", Toast.LENGTH_SHORT).show();
