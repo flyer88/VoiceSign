@@ -21,6 +21,7 @@ import java.util.List;
 
 import android.media.AudioFormat;
 import android.text.TextUtils;
+import android.util.Log;
 
 import me.shyboy.mengma.sinvoice.Buffer.BufferData;
 
@@ -77,6 +78,7 @@ public class SinVoicePlayer implements Encoder.Listener, Encoder.Callback, PcmPl
 
     public void setCodeBook(String codeBook) {
         if (!TextUtils.isEmpty(codeBook) && codeBook.length() < Encoder.getMaxCodeCount() - 1) {
+            Log.i(TAG,codeBook);
             mCodeBook = codeBook;
         }
     }

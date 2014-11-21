@@ -103,6 +103,60 @@
             />
     </LinearLayout>
 
+    <!--NFC-->
+    <LinearLayout
+        android:id="@+id/setting_sign_nfc"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/setting_btn_bg"
+        android:paddingLeft="18dp"
+        android:orientation="vertical"
+        android:paddingRight="18dp"
+        android:clickable="true"
+        android:visibility="gone"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#aaa"
+            ></LinearLayout>
+
+        <TextView
+            android:id="@+id/setting_sign_nfc_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/setting_sign_nfc"
+            android:textSize="18dp"
+            />
+    </LinearLayout>
+    <!--签到列表-->
+    <LinearLayout
+        android:id="@+id/setting_sign_list"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/setting_btn_bg"
+        android:paddingLeft="18dp"
+        android:orientation="vertical"
+        android:paddingRight="18dp"
+        android:clickable="true"
+        android:visibility="gone"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="#aaa"
+            ></LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/setting_sign_list"
+            android:textSize="18dp"
+            />
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/setting_logout"
         android:layout_marginTop="18dp"

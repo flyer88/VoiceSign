@@ -9,7 +9,7 @@
     <string name="pager_know">萌懂</string>
     <string name="pager_setting">设置</string>
     <string name="title_activity_login">LoginActivity</string>
-    <string name="login_title">登  录</string>
+    <string name="login_title">萌    码</string>
     <string name="sno">学  号</string>
     <string name="password">密  码</string>
     <string name="voicesign">声波签到</string>
@@ -19,4 +19,18 @@
     <string name="setting_new_admin">成员管理</string>
     <string name="setting_new_sign">发起新的签到</string>
     <string name="sign_qr">二维码签到</string>
+    <string name="setting_sign_nfc">NFC签到</string>
+    <string name="title_activity_new_sign">NewSignActivity</string>
+    <!-- activity new sign -->
+    <string name="newsign_titlebar">新建签到</string>
+    <string name="newsign_startat_label">起始时间:</string>
+    <string name="newsign_endat_label">截止时间:</string>
+    <string name="newsign_description">简单描述:</string>
+    <string name="newsign_commit">提   交</string>
+    <string name="setting_sign_list">我的签到表</string>
+    <string name="title_activity_sign_list">SignListActivity</string>
+    <string name="signlist_title">我发起的签到</string>
+    <string name="login_btn_text">登  录</string>
+    <string name="title_activity_sign_detail">SignDetail</string>
+
 </resources>

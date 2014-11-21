@@ -9,6 +9,7 @@ public class User {
     private String password;
     private String access_token;
     private int pid;
+    private int none;
     public User(String sno,String name,String password,String access_token,int pid)
     {
         this.sno = sno;

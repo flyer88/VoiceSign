@@ -26,11 +26,16 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.shyboy.mengma.Common.Sign;
+import me.shyboy.mengma.Common.SignConfig;
 import me.shyboy.mengma.Common.User;
+import me.shyboy.mengma.Common.UserSign;
 import me.shyboy.mengma.adapter.MainPagerAdapter;
+import me.shyboy.mengma.database.SignHelper;
 import me.shyboy.mengma.database.UserHelper;
 import me.shyboy.mengma.listener.PagerTabOnClickListener;
 import me.shyboy.mengma.methods.OkHttpUtil;
+import me.shyboy.mengma.methods.SnoGenerator;
 import me.shyboy.mengma.sinvoice.LogHelper;
 import me.shyboy.mengma.sinvoice.SinVoicePlayer;
 import me.shyboy.mengma.sinvoice.SinVoiceRecognition;
@@ -39,12 +44,12 @@ import me.shyboy.mengma.sinvoice.SinVoiceRecognition;
 public class MainActivity extends Activity implements SinVoiceRecognition.Listener, SinVoicePlayer.Listener{
 
     private List<TextView> tabs;
-    private LinearLayout settingVoice,settingQr,settingNewSign,settingNewAdmin,settingLogout;
+    private LinearLayout settingVoice,settingQr,settingNewSign,settingNewAdmin,settingLogout,settingSignNfc,settingSignList;
     private ViewPager pager;
     private List<View> pagers;
     private TextView tab_sign,tab_news,tab_kown,tab_setting;
     private ImageView tab_line;
-    private int currentIndex = 0;// 当前页卡编号
+    private int currentIndex = 0;// 当前页卡编号，
     private int bmpW;// 动画图片宽度
     private SinVoiceRecognition mRecognition;
     private SinVoicePlayer voicePlayer;
@@ -60,9 +65,9 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
     private final static int MSG_RECG_START = 2;
     private final static int MSG_RECG_END = 3;
 
-    private final static String CODEBOOK = "0123456789";
+    private final static String CODEBOOK = "0123-";
 
-    private Handler mHanlder;//解码器
+    private Handler mHanlder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +76,10 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
         user = new UserHelper(MainActivity.this).getUser();
         pager = (ViewPager)findViewById(R.id.main_pager);
         tab_line = (ImageView)findViewById(R.id.tab_line);
-        mHanlder = new RegHandler();
+        mHanlder = new RegHandler(MainActivity.this);
         initTabLine();
         initTab();
         initList();
-        //initSign();
         initVoicePlayer();
         initPagerSetting();
         MainPagerAdapter adapter = new MainPagerAdapter(pagers);
@@ -84,7 +88,7 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
 
         //isLogined();
     }
-    //初始化
+    //初始化底部Tab
 
     private void initTab()
     {
@@ -101,7 +105,7 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
         tab_setting.setOnClickListener(new PagerTabOnClickListener(3,pager));
 
     }
-
+    //初始化setting页面
     private void initPagerSetting()
     {
         initRecognition();
@@ -110,6 +114,8 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
         settingNewAdmin = (LinearLayout)pagers.get(3).findViewById(R.id.setting_new_admin);
         settingVoice = (LinearLayout)pagers.get(3).findViewById(R.id.setting_receive_voice);
         settingQr = (LinearLayout)pagers.get(3).findViewById(R.id.setting_get_qr);
+        settingSignNfc = (LinearLayout)pagers.get(3).findViewById(R.id.setting_sign_nfc);
+        settingSignList = (LinearLayout)pagers.get(3).findViewById(R.id.setting_sign_list);
         //退出登录
         settingLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,10 +130,15 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
         {
             settingVoice.setVisibility(View.VISIBLE);
             settingQr.setVisibility(View.VISIBLE);
-
+            settingSignNfc.setVisibility(View.VISIBLE);
             settingVoice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(SignConfig.isNetworkConnected(MainActivity.this) == false)
+                    {
+                        Toast.makeText(MainActivity.this,"凑 ~ ~ 没联网",Toast.LENGTH_SHORT).show();
+                        return ;
+                    }
                     if(isRec)
                     {
                         ((TextView)v.findViewById(R.id.setting_receive_voice_text)).setText("接收签到声波");
@@ -142,10 +153,47 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
                     }
                 }
             });
+            //二维码签到
+            settingQr.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(SignConfig.isNetworkConnected(MainActivity.this) == false)
+                    {
+                        Toast.makeText(MainActivity.this,"凑 ~ ~ 没联网",Toast.LENGTH_SHORT).show();
+                        return ;
+                    }
+                }
+            });
+            //NFC获取一卡通信息
+            settingSignNfc.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MainActivity.this,"NFC",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
         if(user.getPid() < 3)
         {
             settingNewSign.setVisibility(View.VISIBLE);
+            settingNewSign.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(MainActivity.this,NewSignActivity.class);
+                    startActivity(intent);
+                }
+            });
+            settingSignList.setVisibility(View.VISIBLE); //签到列表
+            settingSignList.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(SignConfig.isNetworkConnected(MainActivity.this) == false)
+                    {
+                        Toast.makeText(MainActivity.this,"凑 ~ ~ 没联网",Toast.LENGTH_SHORT).show();
+                        return ;
+                    }
+                    new OkHttpUtil(MainActivity.this).list();
+                }
+            });
         }
         if(user.getPid() < 2)
         {
@@ -153,7 +201,7 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
         }
 
     }
-
+    //初始化VoicePlayer
     private void initVoicePlayer()
     {
         voicePlayer = new SinVoicePlayer(CODEBOOK);
@@ -171,13 +219,13 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
                 {
                     sign_btn.setText("终止签到");
                     isPlaying = true;
-                    voicePlayer.play("12108315",true,1000);
+                    voicePlayer.play(new SnoGenerator().encode(user.getSno().substring(5)),true,1000);
                     //Toast.makeText(MainActivity.this,)
                 }
             }
         });
     }
-
+    //把ViewPager 的四个页面加载到List
     private void initList()
     {
         tabs = new ArrayList<TextView>();
@@ -195,7 +243,7 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
         pagers.add(inflater.inflate(R.layout.pager_setting,null));
 
     }
-
+    //获取底部滑条
     private void initTabLine()
     {
         WindowManager wm=(WindowManager)this.getSystemService(Context.WINDOW_SERVICE);
@@ -253,42 +301,21 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
 
        }
    }
-
-    public static String encode(int uid)
-    {
-
-            String s = Integer.toHexString(uid);
-            while(s.length() < 11)
-            {
-                s = "0" + s;
-            }
-            return s;
-    }
-
-    private String genText(int count) {
-        StringBuilder sb = new StringBuilder();
-        int pre = 0;
-        while (count > 0) {
-            int x = (int) (Math.random() * MAX_NUMBER + 1);
-            if (Math.abs(x - pre) > 0) {
-                sb.append(x);
-                --count;
-                pre = x;
-            }
-        }
-        return sb.toString();
-    }
-    //接收解密过程
-    private class RegHandler extends Handler {
+    private static class RegHandler extends Handler {
         private StringBuilder mTextBuilder = new StringBuilder();
         //解码具体处理
+        private Context context;
+
+        public RegHandler(Context context)
+        {
+            this.context = context;
+        }
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_SET_RECG_TEXT:
                     char ch = (char) msg.arg1;
                     mTextBuilder.append(ch);
-                    Toast.makeText(MainActivity.this,mTextBuilder.toString(),Toast.LENGTH_SHORT).show();
                     break;
 
                 case MSG_RECG_START:
@@ -297,6 +324,17 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
 
                 case MSG_RECG_END:
                     LogHelper.d(TAG, "recognition end");
+                    String nums = new SnoGenerator().decode(mTextBuilder.toString());
+                    if(nums != null)
+                    {
+                        String sno = "12108";
+                        sno += nums;
+                        User user = new UserHelper(context).getUser();
+                        UserSign userSign = new UserSign(sno,user.getSno(),user.getAccess_token());
+                        //Toast.makeText(context,sno,Toast.LENGTH_SHORT).show();
+                        new OkHttpUtil(context).Sign(userSign);
+                    }
+                    mTextBuilder.delete(0, mTextBuilder.length());
                     break;
             }
             super.handleMessage(msg);
@@ -307,7 +345,6 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
     public void onRecognitionStart() {
         mHanlder.sendEmptyMessage(MSG_RECG_START);
         Log.i("reg voice","start ***************");
-
     }
 
     @Override
@@ -335,9 +372,16 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
     public void onStop()
     {
         super.onStop();
+        if(isPlaying)
+        {
+            sign_btn.setText("声波签到");
+            voicePlayer.stop();
+
+        }
         if(isLogout)
         {
             this.finish();
         }
     }
+
 }

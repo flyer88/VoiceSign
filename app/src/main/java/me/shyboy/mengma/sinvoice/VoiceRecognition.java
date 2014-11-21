@@ -25,13 +25,14 @@ public class VoiceRecognition {
     private final static int STATE_STOP = 2;
     private final static int STEP1 = 1;
     private final static int STEP2 = 2;
-    /*private final static int INDEX[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 6, -1, -1, -1, -1, 5, -1, -1, -1, 4, -1, -1, 3, -1, -1, 2, -1, -1, 1, -1, -1,
-            0 };*/
+    private final static int INDEX[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 6, -1, -1, -1, -1, 5, -1, -1, -1, 4, -1, -1, 3, -1, -1, 2, -1, -1, 1, -1, -1,
+            0 };
     //修改样点数量对应的数据
-    private final static int INDEX[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 11, -1, -1, -1, -1, 10, -1,
-            -1, -1, 9, -1, -1, 8, -1, -1, 7, -1, -1, 6, -1, -1, 5 ,-1 ,-1,4,-1,-1,3,-1,-1,2,-1,-1,1,-1,-1,0
-    };
-    private final static int MAX_SAMPLING_POINT_COUNT = 46;
+    /*private final static int INDEX[] = { -1, -1, -1, -1, 12, -1, -1, 11, -1, -1, 10, -1, -1, 9, -1, -1, 8,
+            -1, -1, 7, -1, -1, 6, -1, -1, 5, -1, -1, 4, -1, -1, 3 ,-1 ,-1,2,-1,-1,1,-1,-1,0
+    };*/
+    private final static int MAX_SAMPLING_POINT_COUNT = 31;
+   // private final static int MAX_SAMPLING_POINT_COUNT = 31;
     private final static int MIN_REG_CIRCLE_COUNT = 10;
 
     private int mState;
@@ -69,7 +70,15 @@ public class VoiceRecognition {
 
         void freeRecognitionBuffer(BufferData buffer);
     }
-
+   //2014-11-20 重新修改获取Index方式
+    public int getIndex(int samplingPointCount)
+    {
+       int index = -1;
+       samplingPointCount -= Common.MIN_SAMPLINGCOUNT;
+       if(samplingPointCount % 3 ==0)
+           index = Common.MAX_TOKEN - (samplingPointCount-Common.MIN_SAMPLINGCOUNT)/Common.DEFAULT_INTERVAL;
+        return index;
+    }
     public VoiceRecognition(Callback callback, int SampleRate, int channel, int bits) {
         mState = STATE_STOP;
 
@@ -175,81 +184,56 @@ public class VoiceRecognition {
     }
 
     private int preReg(int samplingPointCount) {
-        switch (samplingPointCount) {
-        case 8:
-        case 9:
-        case 10:
-        case 11:
-        case 12:
-            samplingPointCount = 10;
-            break;
+       switch (samplingPointCount) {
+           case 8:
+           case 9:
+           case 10:
+           case 11:
+           case 12:
+               samplingPointCount = 10;
+               break;
 
-        case 13:
-        case 14:
-        case 15:
-        case 16:
-        case 17:
-            samplingPointCount = 15;
-            break;
+           case 13:
+           case 14:
+           case 15:
+           case 16:
+           case 17:
+               samplingPointCount = 15;
+               break;
 
-        case 18:
-        case 19:
-        case 20:
-            samplingPointCount = 19;
-            break;
+           case 18:
+           case 19:
+           case 20:
+               samplingPointCount = 19;
+               break;
 
-        case 21:
-        case 22:
-        case 23:
-            samplingPointCount = 22;
-            break;
+           case 21:
+           case 22:
+           case 23:
+               samplingPointCount = 22;
+               break;
 
-        case 24:
-        case 25:
-        case 26:
-            samplingPointCount = 25;
-            break;
+           case 24:
+           case 25:
+           case 26:
+               samplingPointCount = 25;
+               break;
 
-        case 27:
-        case 28:
-        case 29:
-            samplingPointCount = 28;
-            break;
+           case 27:
+           case 28:
+           case 29:
+               samplingPointCount = 28;
+               break;
 
-        case 30:
-        case 31:
-        case 32:
-            samplingPointCount = 31;
-            break;
-        //2014-11-18 liu
-        case 33:
-        case 34:
-        case 35:
-             samplingPointCount = 34;
-             break;
-        case 36:
-        case 37:
-        case 38:
-            samplingPointCount = 37;
-            break;
-        case 39:
-        case 40:
-        case 41:
-            samplingPointCount = 40;
-            break;
-        case 42:
-        case 43:
-        case 44:
-            samplingPointCount = 43;
-            break;
-        case 45:
-        case 46:
-        case 47:
-            samplingPointCount = 46;
-            break;
-        default:
-            samplingPointCount = 0;
-            break;
+           case 30:
+           case 31:
+           case 32:
+               samplingPointCount = 31;
+               break;
+
+           default:
+               samplingPointCount = 0;
+               break;
         }
 
         return samplingPointCount;
@@ -279,6 +263,7 @@ public class VoiceRecognition {
             if (!mIsRegStart) {
                 if (samplingPointCount > 0) {
                     mRegValue = samplingPointCount;
+                    //mRegIndex = getIndex(samplingPointCount);
                     mRegIndex = INDEX[samplingPointCount];
                     mIsRegStart = true;
                     mRegCount = 1;

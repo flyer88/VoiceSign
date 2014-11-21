@@ -18,10 +18,14 @@ package me.shyboy.mengma.sinvoice;
 
 public class Common {
     public final static int START_TOKEN = 0;
-    public final static int STOP_TOKEN = 11;
-    public final static String DEFAULT_CODE_BOOK = "0123456789";
+    public final static int STOP_TOKEN = 6;
+    public final static String DEFAULT_CODE_BOOK = "0123-";
 
     public final static int DEFAULT_BUFFER_SIZE = 8192;
     public final static int DEFAULT_BUFFER_COUNT = 3;
     public final static int DEFAULT_SAMPLE_RATE = 44100;
+
+    public final static int MAX_TOKEN = 12;
+    public final static int DEFAULT_INTERVAL = 3;
+    public final static int MIN_SAMPLINGCOUNT = 4;
 }

@@ -2,4 +2,7 @@
 <resources>
     <color name="setting_btn_normal">#fff</color>
     <color name="setting_btn_pressed">#ddd</color>
+    <color name="title_blue_bg">#3e82f7</color>
+    <color name="item_detail_normal">#eee</color>
+    <color name="item_detail_pressed">#ddd</color>
 </resources>

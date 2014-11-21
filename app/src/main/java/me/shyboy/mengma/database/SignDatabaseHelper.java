@@ -17,6 +17,19 @@ public class SignDatabaseHelper extends SQLiteOpenHelper {
             + "password text,"
             + "pid integer,"
             + "access_token text )";
+    public static final String CREATE_SIGN =
+            "create table Sign ("
+            +"id integer,"
+            +"started_at text,"
+            +"ended_at text,"
+            +"description text)";
+    public static final String CREATE_DETAIL =
+            "create table SignDetail ("
+            +"sno text,"
+            +"sign_id integer,"
+            +"description text,"
+            +"name text,"
+            +"created_at text )";
     public static final String DEFAULTDBNAME = "sign.db";
 
     public SignDatabaseHelper(Context context,String name,SQLiteDatabase.CursorFactory factory,int version)
@@ -36,12 +49,16 @@ public class SignDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL(CREATE_USER);
+        db.execSQL(CREATE_SIGN);
+        db.execSQL(CREATE_DETAIL);
         Log.i("database create","create Database User");
     }
 
     public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion)
     {
         db.execSQL("drop table if exists User");
+        db.execSQL("drop table if exists Sign");
+        db.execSQL("drop table if exists SignDetail");
         onCreate(db);
     }
 }

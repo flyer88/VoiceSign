@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/item_sign"
+    >
+    <TextView
+        android:id="@+id/item_sign_date"
+        android:padding="5px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2014-11-21"
+        android:textColor="#a8a8a8"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="#cdcdcd"
+       />
+    <TextView
+        android:id="@+id/item_sign_description"
+        android:padding="15px"
+        android:gravity="center"
+        android:textColor="#555"
+        android:textSize="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="班级签到"
+        />
+    <TextView
+        android:id="@+id/item_sign_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="15dp"
+        android:gravity="right"
+        android:textColor="#53c884"
+        android:textSize="14dp"
+        android:text="12:12 - 13:13"
+        />
+
+</LinearLayout>

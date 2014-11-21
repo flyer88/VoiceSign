@@ -27,9 +27,9 @@ public class Encoder implements SinGenerator.Listener, SinGenerator.Callback {
 
     // index 0, 1, 2, 3, 4, 5, 6
     // sampling point Count 31, 28, 25, 22, 19, 15, 10
-    //private final static int[] CODE_FREQUENCY = { 1422, 1575, 1764, 2004, 2321, 2940, 4410 };
+   // private final static int[] CODE_FREQUENCY = { 1422, 1575, 1764, 2004, 2321, 2940, 4410 };
     //增加频率。辨识更多的字符,2014-11-20
-    private final static int[] CODE_FREQUENCY = {958,1025,1102,1191,1297,1422,1575,1764,2004,2321,2940,4410};
+    private final static int[] CODE_FREQUENCY = {1422,1575,1764,2004,2321,2940,4410};
     private int mState;
 
     private SinGenerator mSinGenerator;
