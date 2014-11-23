@@ -198,6 +198,17 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
         if(user.getPid() < 2)
         {
             settingNewAdmin.setVisibility(View.VISIBLE);
+            settingNewAdmin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(SignConfig.isNetworkConnected(MainActivity.this) == false)
+                    {
+                        Toast.makeText(MainActivity.this,"凑 ~ ~ 没联网",Toast.LENGTH_SHORT).show();
+                        return ;
+                    }
+                    new OkHttpUtil(MainActivity.this).memberList();
+                }
+            });
         }
 
     }

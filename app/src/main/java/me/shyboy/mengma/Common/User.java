@@ -19,6 +19,13 @@ public class User {
         this.pid = pid;
     }
 
+    public User(String sno,String name,int pid)
+    {
+        this.sno = sno;
+        this.name = name;
+        this.pid = pid;
+    }
+
     public void  setSno(String sno)
     {
         this.sno = sno;

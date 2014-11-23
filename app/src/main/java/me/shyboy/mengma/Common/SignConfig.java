@@ -8,8 +8,9 @@ import android.net.NetworkInfo;
  * Created by foul on 14/11/16.
  */
 public final class SignConfig {
-    public static final int DBVERSION = 5;
-    public static final String HOST = "http://www.flappyant.com/VoiceSignListener/public/";//http://192.168.233.2/laravel/sign/public/";
+    public static final int DBVERSION = 6;
+    public static final String HOST = "http://www.flappyant.com/VoiceSignListener/public/";
+    //public static final String HOST = "http://192.168.233.2/laravel/sign/public/";
     public static final String TABLEUSER = "User";
     public static final String URLLOGIN = HOST+"login";
     public static final String URLNEWSIGN = HOST+"sign/new";
@@ -17,8 +18,11 @@ public final class SignConfig {
     public static final String URLISSIGNED = HOST+"sign/signed";
     public static final String URLLISTSIGN = HOST+"sign/list";
     public static final String URLSIGNDETAIL = HOST+"sign/detail";
+    public static final String URLUSERLIST = HOST+"auth/list";
+    public static final String URLUSERMANAGER = HOST+"auth/manager";
     public static final String TABLESIGN = "Sign";
     public static final String TABLEDETAIL = "SignDetail";
+    public static final String TABLEMEMBER = "members";
     public static final int SNOLENGTH = 8;
     public static final int PASSWORDMINLENGTH = 6;
     public static final int PASSWORDMAXLENGTH = 16;

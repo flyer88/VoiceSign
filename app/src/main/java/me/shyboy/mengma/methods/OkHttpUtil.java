@@ -3,6 +3,10 @@ package me.shyboy.mengma.methods;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.RingtoneManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -21,6 +25,7 @@ import com.squareup.okhttp.Response;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Random;
 
 import me.shyboy.mengma.Common.OkHttpUtilResponse;
 import me.shyboy.mengma.Common.Sign;
@@ -30,8 +35,11 @@ import me.shyboy.mengma.Common.SignList;
 import me.shyboy.mengma.Common.User;
 import me.shyboy.mengma.Common.UserSign;
 import me.shyboy.mengma.MainActivity;
+import me.shyboy.mengma.R;
 import me.shyboy.mengma.SignDetailActivity;
 import me.shyboy.mengma.SignListActivity;
+import me.shyboy.mengma.UserManagerActivity;
+import me.shyboy.mengma.database.MemberHelper;
 import me.shyboy.mengma.database.SignDetailHelper;
 import me.shyboy.mengma.database.SignHelper;
 import me.shyboy.mengma.database.UserHelper;
@@ -43,6 +51,7 @@ public class OkHttpUtil {
    // private String result;
     private Context context;
     private OkHttpClient client;
+    private SoundPool soundPool;
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
 
     public OkHttpUtil(Context context)
@@ -100,6 +109,7 @@ public class OkHttpUtil {
                 if(Integer.parseInt(obj.getErrcode()) == SignConfig.HTTPERRORCODEOK)
                 {
                    // Log.i("errcode panduan","ok");
+                   // soundRing();
                     Intent intent = new Intent(context, MainActivity.class);
                     UserHelper helper = new UserHelper(context);
                     helper.update(obj.getData());
@@ -205,6 +215,7 @@ public class OkHttpUtil {
                 int code = Integer.parseInt(obj.getErrcode());
                 if(code == SignConfig.HTTPERRORCODEOK)
                 {
+                    soundRing();
                     Looper.prepare();
                     Toast.makeText(context,"签到成功",Toast.LENGTH_SHORT).show();
                     Looper.loop();
@@ -217,6 +228,7 @@ public class OkHttpUtil {
                 }
                 else if(code == SignConfig.HTTP_CODE_SIGNED)
                 {
+                    soundRing();
                     Looper.prepare();
                     Toast.makeText(context,"已经签过到了",Toast.LENGTH_SHORT).show();
                     Looper.loop();
@@ -341,4 +353,69 @@ public class OkHttpUtil {
             }
         }
     }
+    //获取所有成员
+    public void memberList()
+    {
+        Request request = new Request.Builder()
+                .url(SignConfig.URLUSERLIST)
+                .build();
+        client.newCall(request).enqueue(new MemberCallBack());
+    }
+
+    class MemberCallBack implements Callback
+    {
+        @Override
+        public void onFailure(Request request, IOException e) {
+            Log.i("response result","failed to sign--------");
+            e.printStackTrace();
+        }
+
+        @Override
+        public void onResponse(Response response) throws IOException {
+            if(!response.isSuccessful())
+            {
+                Log.i("response result","response failed");
+                throw new IOException();
+            }
+            else
+            {
+                String result = response.body().string();
+                //Log.i("JSON",result);
+                Gson gson = new Gson();
+                OkHttpUtilResponse<SignList<User>> obj =
+                        gson.fromJson(result,new TypeToken<OkHttpUtilResponse<SignList<User>>>(){}.getType());
+                int code = Integer.parseInt(obj.getErrcode());
+                if(code == SignConfig.HTTPERRORCODEOK)
+                {
+                    List<User> list = obj.getData().getList();
+                    new MemberHelper(context).update(list);
+                    context.startActivity(new Intent(context,UserManagerActivity.class));
+
+                }
+                else
+                {
+                    Looper.prepare();
+                    Toast.makeText(context,"没有响应",Toast.LENGTH_SHORT).show();
+                    Looper.loop();
+                }
+            }
+        }
+    }
+    //提示音
+    private void soundRing(){
+        Log.i("Sound","******************************");
+       // int[] raw = {R.raw.fire,R.raw.hahaha,R.raw.heimei,R.raw.sillyb};
+       // int rand = ((int)(Math.random()*10))%4;
+        soundPool= new SoundPool(2, AudioManager.STREAM_MUSIC  ,10);
+        soundPool.load(context,R.raw.heimei,1);
+        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                soundPool.play(1,1, 1, 100, 0, 1);
+            }
+        });
+    }
+
+
+
 }

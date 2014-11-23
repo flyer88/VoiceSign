@@ -5,4 +5,7 @@
     <color name="title_blue_bg">#3e82f7</color>
     <color name="item_detail_normal">#eee</color>
     <color name="item_detail_pressed">#ddd</color>
+    <color name="blue_light">#5a95f8</color>
+    <color name="red">#dd4330</color>
+    <color name="red_light">#ea6953</color>
 </resources>
