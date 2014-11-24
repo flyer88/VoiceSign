@@ -14,17 +14,13 @@ public class MyNfcAdapter {
        this.context = context;
     }
     public boolean init(){
-        try{
-            this.nfcAdapter = NfcAdapter.getDefaultAdapter(context);
-        }
-        catch (Exception e){
-            Toast.makeText(context,"wrong",Toast.LENGTH_SHORT).show();
-        }
-
-
+            try{
+                this.nfcAdapter = NfcAdapter.getDefaultAdapter(context);
+            }catch (Exception e){
+                Toast.makeText(context,"wrong",Toast.LENGTH_SHORT).show();
+            }
             if (nfcAdapter == null) {
                 Toast.makeText(context, "设备不支持NFC！", Toast.LENGTH_SHORT).show();
-
                 return false;
             }
             if (!nfcAdapter.isEnabled()) {

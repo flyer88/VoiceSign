@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
+import android.nfc.NfcAdapter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -74,6 +75,8 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
     private final static String CODEBOOK = "0123-";
 
     private Handler mHanlder;
+
+    NfcAdapter nfcAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -172,7 +175,17 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
             settingSignNfc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MainActivity.this,"如果需要使用NFC签到,请将一卡通放到手机背后!",Toast.LENGTH_SHORT).show();
+                    nfcAdapter = NfcAdapter.getDefaultAdapter(MainActivity.this);
+                    if (nfcAdapter == null) {
+                        Toast.makeText(MainActivity.this, "设备不支持NFC！快买买买!!", Toast.LENGTH_SHORT).show();
+                    } else{
+                        if (!nfcAdapter.isEnabled()) {
+                            Toast.makeText(MainActivity.this,"请在系统设置中先启用NFC功能！",Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(MainActivity.this,"如果需要使用NFC签到,请将一卡通放到手机背后!",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
                 }
             });
         }
