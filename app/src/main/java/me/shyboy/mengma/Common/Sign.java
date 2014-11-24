@@ -1,5 +1,9 @@
 package me.shyboy.mengma.Common;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by foul on 14/11/20.
  *
@@ -69,5 +73,45 @@ public class Sign {
     public String getTime()
     {
         return this.started_at.substring(11,16) + " —— " + this.ended_at.substring(11,16);
+    }
+
+    public String getWeek() {
+
+        String pTime = getDate();
+        String Week = "周";
+
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        try {
+
+            c.setTime(format.parse(pTime));
+
+        } catch (ParseException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (c.get(Calendar.DAY_OF_WEEK) == 1) {
+            Week += "日";
+        }
+        if (c.get(Calendar.DAY_OF_WEEK) == 2) {
+            Week += "一";
+        }
+        if (c.get(Calendar.DAY_OF_WEEK) == 3) {
+            Week += "二";
+        }
+        if (c.get(Calendar.DAY_OF_WEEK) == 4) {
+            Week += "三";
+        }
+        if (c.get(Calendar.DAY_OF_WEEK) == 5) {
+            Week += "四";
+        }
+        if (c.get(Calendar.DAY_OF_WEEK) == 6) {
+            Week += "五";
+        }
+        if (c.get(Calendar.DAY_OF_WEEK) == 7) {
+            Week += "六";
+        }
+        return Week;
     }
 }

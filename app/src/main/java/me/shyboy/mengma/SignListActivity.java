@@ -91,7 +91,7 @@ public class SignListActivity extends Activity {
                 view = convertView;
                 viewHolder = (ViewHolder)view.getTag();
             }
-            viewHolder.date.setText(sign.getDate());
+            viewHolder.date.setText(sign.getDate()+"   "+sign.getWeek());
             viewHolder.description.setText(sign.getDescription());
             viewHolder.time.setText(sign.getTime());
             return  view;
