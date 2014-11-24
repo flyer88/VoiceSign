@@ -36,4 +36,6 @@
     <string name="title_activity_nfc">NfcActivity</string>
     <string name="title_activity_user_manager">UserManagerActivity</string>
     <string name="title_activity_about">AboutActivity</string>
+    <string name="title_activity_qrcode">QRcodeActivity</string>
+
 </resources>

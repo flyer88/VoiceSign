@@ -3,6 +3,7 @@ package me.shyboy.mengma;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.WriterException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +33,8 @@ import me.shyboy.mengma.Common.Sign;
 import me.shyboy.mengma.Common.SignConfig;
 import me.shyboy.mengma.Common.User;
 import me.shyboy.mengma.Common.UserSign;
+import me.shyboy.mengma.QRcode.zxing.activity.CaptureActivity;
+import me.shyboy.mengma.QRcode.zxing.encoding.EncodingHandler;
 import me.shyboy.mengma.adapter.MainPagerAdapter;
 import me.shyboy.mengma.database.SignHelper;
 import me.shyboy.mengma.database.UserHelper;
@@ -56,6 +61,7 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
     private User user;
     //page_sign
     private Button sign_btn;
+    private Button Qrcode;
     private boolean isLogout = false;
     private boolean isPlaying = false;
     private boolean isRec = false;
@@ -81,6 +87,7 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
         initTab();
         initList();
         initVoicePlayer();
+        initQrcode();
         initPagerSetting();
         MainPagerAdapter adapter = new MainPagerAdapter(pagers);
         pager.setAdapter(adapter);
@@ -154,15 +161,11 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
                     }
                 }
             });
-            //二维码签到
+            //产生二维码
             settingQr.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(SignConfig.isNetworkConnected(MainActivity.this) == false)
-                    {
-                        Toast.makeText(MainActivity.this,"凑 ~ ~ 没联网",Toast.LENGTH_SHORT).show();
-                        return ;
-                    }
+                    startActivity(new Intent(MainActivity.this,QRcodeActivity.class));
                 }
             });
             //NFC获取一卡通信息
@@ -227,6 +230,7 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
             }
         });
     }
+
     //初始化VoicePlayer
     private void initVoicePlayer()
     {
@@ -248,6 +252,18 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
                     voicePlayer.play(new SnoGenerator().encode(user.getSno().substring(5)),true,1000);
                     //Toast.makeText(MainActivity.this,)
                 }
+            }
+        });
+    }
+
+    private void initQrcode()
+    {
+        Qrcode = (Button)pagers.get(0).findViewById(R.id.sign_qr);
+        Qrcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent openCameraIntent = new Intent(MainActivity.this,CaptureActivity.class);
+                startActivityForResult(openCameraIntent, 0);
             }
         });
     }
@@ -407,6 +423,23 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
         if(isLogout)
         {
             this.finish();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+            Bundle bundle = data.getExtras();
+            String scanResult = bundle.getString("result");
+            String[] result = scanResult.split("-");
+            if (result.length == 3 && result[0].equals("voicesign")){
+                new OkHttpUtil(MainActivity.this).Sign(new UserSign(user.getSno()
+                ,result[1],result[2]));
+            }else{
+                Toast.makeText(MainActivity.this,"二维码错误",Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
