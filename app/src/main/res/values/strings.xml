@@ -35,5 +35,5 @@
     <string name="link_register">用户注册</string>
     <string name="title_activity_nfc">NfcActivity</string>
     <string name="title_activity_user_manager">UserManagerActivity</string>
-
+    <string name="title_activity_about">AboutActivity</string>
 </resources>

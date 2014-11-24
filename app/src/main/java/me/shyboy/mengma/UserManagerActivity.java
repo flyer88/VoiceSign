@@ -112,14 +112,24 @@ public class UserManagerActivity extends Activity {
             }
             viewHolder.name.setText(user.getName());
             viewHolder.sno.setText(user.getSno());
+            //viewHolder.sno.setVisibility(View.VISIBLE);
+            if(user.getPid() == 2)
+            {
+                viewHolder.action.setBackgroundResource(R.drawable.manager_bt_red);
+                viewHolder.action.setText("撤销管理员");
+            }
+            else
+            {
+                viewHolder.action.setBackgroundResource(R.drawable.manager_bt_blue);
+                viewHolder.action.setText("设为管理员");
+            }
             if(user.getPid() == 1)
             {
                 viewHolder.action.setVisibility(View.INVISIBLE);
             }
-            if(user.getPid() < 3)
+            else
             {
-                viewHolder.action.setBackgroundResource(R.drawable.manager_bt_red);
-                viewHolder.action.setText("撤销管理员");
+                viewHolder.action.setVisibility(View.VISIBLE);
             }
             viewHolder.action.setOnClickListener(new ManagerOnclickListener(position));
             return  view;

@@ -2,6 +2,7 @@ package me.shyboy.mengma;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,6 +29,7 @@ public class SignDetailActivity extends Activity {
     private TextView title;
     private List<SignDetail> list;
     private ListView listView;
+    private static final int STATE_ON_TIME = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +88,14 @@ public class SignDetailActivity extends Activity {
             viewHolder.sno.setText(signDetail.getSno());
             viewHolder.name.setText(signDetail.getName());
             viewHolder.time.setText(signDetail.getTime());
+            if(signDetail.getState() == STATE_ON_TIME)
+            {
+                viewHolder.time.setTextColor(Color.BLACK);
+            }
+            else
+            {
+                viewHolder.time.setTextColor(Color.RED);
+            }
             return  view;
         }
         class ViewHolder

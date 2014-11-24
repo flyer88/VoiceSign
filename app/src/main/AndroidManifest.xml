@@ -56,6 +56,10 @@
             android:name="me.shyboy.mengma.UserManagerActivity"
             android:label="@string/title_activity_user_manager" >
         </activity>
+        <activity
+            android:name="me.shyboy.mengma.AboutActivity"
+            android:label="@string/title_activity_about" >
+        </activity>
     </application>
 
 </manifest>

@@ -36,7 +36,7 @@
         android:layout_height="match_parent"
         android:divider="#aaa"
         android:dividerHeight="1px"
-
+        android:scrollbarStyle="insideOverlay"
         >
     </ListView>
 </LinearLayout>

@@ -44,11 +44,11 @@ import me.shyboy.mengma.sinvoice.SinVoiceRecognition;
 public class MainActivity extends Activity implements SinVoiceRecognition.Listener, SinVoicePlayer.Listener{
 
     private List<TextView> tabs;
-    private LinearLayout settingVoice,settingQr,settingNewSign,settingNewAdmin,settingLogout,settingSignNfc,settingSignList;
+    private LinearLayout settingVoice,settingQr,settingNewSign,settingNewAdmin,settingLogout,settingSignNfc,settingSignList,setting_about;
     private ViewPager pager;
     private List<View> pagers;
-    private TextView tab_sign,tab_news,tab_kown,tab_setting;
-    private ImageView tab_line;
+    private TextView tab_sign,tab_news,tab_kown,tab_setting,setting_name;
+    private ImageView tab_line,setting_headimg;
     private int currentIndex = 0;// 当前页卡编号，
     private int bmpW;// 动画图片宽度
     private SinVoiceRecognition mRecognition;
@@ -116,6 +116,7 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
         settingQr = (LinearLayout)pagers.get(3).findViewById(R.id.setting_get_qr);
         settingSignNfc = (LinearLayout)pagers.get(3).findViewById(R.id.setting_sign_nfc);
         settingSignList = (LinearLayout)pagers.get(3).findViewById(R.id.setting_sign_list);
+        setting_about = (LinearLayout)pagers.get(3).findViewById(R.id.setting_about);
         //退出登录
         settingLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,7 +211,21 @@ public class MainActivity extends Activity implements SinVoiceRecognition.Listen
                 }
             });
         }
+        int[] headimgs ={R.drawable.headimg1,R.drawable.headimg2,R.drawable.headimg3,R.drawable.headimg4
+                ,R.drawable.headimg5,R.drawable.headimg6,R.drawable.headimg7,R.drawable.headimg8};
+        int index = ((int)(Math.random()*10))%8;
+        Log.i("random",""+index);
+        setting_name = (TextView)pagers.get(3).findViewById(R.id.setting_name);
+        setting_headimg = (ImageView)pagers.get(3).findViewById(R.id.setting_headimg);
+        setting_headimg.setImageResource(headimgs[index]);
+        setting_name.setText(user.getName());
 
+        setting_about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,AboutActivity.class));
+            }
+        });
     }
     //初始化VoicePlayer
     private void initVoicePlayer()

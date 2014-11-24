@@ -8,7 +8,7 @@ import android.net.NetworkInfo;
  * Created by foul on 14/11/16.
  */
 public final class SignConfig {
-    public static final int DBVERSION = 6;
+    public static final int DBVERSION = 7;
     public static final String HOST = "http://www.flappyant.com/VoiceSignListener/public/";
     //public static final String HOST = "http://192.168.233.2/laravel/sign/public/";
     public static final String TABLEUSER = "User";

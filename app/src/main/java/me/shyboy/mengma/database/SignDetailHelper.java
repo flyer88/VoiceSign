@@ -34,6 +34,7 @@ public class SignDetailHelper {
             values.put("description", signDetail.getDescription());
             values.put("name", signDetail.getName());
             values.put("created_at",signDetail.getCreated_at());
+            values.put("state",signDetail.getState());
             db.insert(SignConfig.TABLEDETAIL, null, values);
         }
     }
@@ -50,7 +51,8 @@ public class SignDetailHelper {
                         cursor.getInt(cursor.getColumnIndex("sign_id")),
                         cursor.getString(cursor.getColumnIndex("description")),
                         cursor.getString(cursor.getColumnIndex("name")),
-                        cursor.getString(cursor.getColumnIndex("created_at"))
+                        cursor.getString(cursor.getColumnIndex("created_at")),
+                        cursor.getInt(cursor.getColumnIndex("state"))
                 ));
             }while(cursor.moveToNext());
             return list;

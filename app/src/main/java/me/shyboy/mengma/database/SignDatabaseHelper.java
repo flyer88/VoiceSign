@@ -29,7 +29,8 @@ public class SignDatabaseHelper extends SQLiteOpenHelper {
             +"sign_id integer,"
             +"description text,"
             +"name text,"
-            +"created_at text )";
+            +"created_at text,"
+            +"state integer )";
     public static final String CREATE_MEMBER =
             "create table members ("
             +"sno text,"

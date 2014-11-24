@@ -6,6 +6,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="kown"
+        android:textSize="18dp"
+        android:text="测试版,目前提供一卡通签到和声波签到"
         />
 </LinearLayout>
